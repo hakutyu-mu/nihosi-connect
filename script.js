@@ -160,5 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("reset").onclick = () => {
         resetResult();
         loadQuestion(); // 次の問題をロード
+        window.scrollTo({
+          top:0,
+          behavior:"smooth"
+        });
     };
 });
