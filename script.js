@@ -6,7 +6,7 @@ let selectedEras = []; // チェックボックスで選択された時代を格
 // CSV読み込み関数
 async function loadCSV() {
     try {
-        const response = await fetch('nihosi-connect/assets/日本史リンクデータ管理1.csv');
+        const response = await fetch('assets/日本史リンクデータ管理1.csv');
         const data = await response.text();
         const parsedData = parseCSV(data);
 
