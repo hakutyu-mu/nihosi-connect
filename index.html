@@ -8,16 +8,20 @@
 </head>
 <body>
   <h1 class="heading">日本史コネクト</h1>
-  <!--<div id="era-filters">
-    <label><input type="checkbox" value="飛鳥"> 飛鳥</label>
-    <label><input type="checkbox" value="奈良"> 奈良</label>
-    <label><input type="checkbox" value="平安"> 平安</label>
-    <label><input type="checkbox" value="鎌倉"> 鎌倉</label>
-    <label><input type="checkbox" value="室町"> 室町</label>
-    <label><input type="checkbox" value="安土桃山"> 安土桃山</label> 
-    <label><input type="checkbox" value="江戸"> 江戸</label> -->
-</div>
-  <div id="quiz">
+  
+   <div id="quiz">
+  
+  <div id="era-filters">
+    <label><input type="checkbox" name="era" value="飛鳥"> 飛鳥</label>
+    <label><input type="checkbox" name="era" value="奈良"> 奈良</label>
+    <label><input type="checkbox" name="era" value="平安"> 平安</label>
+    <label><input type="checkbox" name="era" value="鎌倉"> 鎌倉</label>
+    <label><input type="checkbox" name="era" value="室町"> 室町</label>
+    <label><input type="checkbox" name="era" value="安土桃山"> 安土桃山</label>
+    <label><input type="checkbox" name="era" value="江戸"> 江戸</label>
+  </div>
+  <button onclick="applyFilters()">フィルターを適用</button>
+
     <div id="person-question">
       <h2>人物: <span id="person-name"></span></h2>
     </div>
@@ -32,12 +36,16 @@
     <div class="question">
       <h3>この時期に関わりのある人物・出来事を選択</h3>
       <div id="relation-options" class="options"></div>
+    </div>
+
   <center>
     <!-- チェックボタン -->
-  <button id="check-answer">答え合わせ</button>
-  <div id="result" class="result"></div>
-  <button id="reset">次の問題</button> <!-- 追加 -->
+    <button id="check-answer">答え合わせ</button>
+    <div id="result" class="result"></div>
+    <button id="reset">次の問題</button>
   </center>
+</div>
+
   <script src="script.js"></script>
-  </div>
 </body>
+</html>
