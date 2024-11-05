@@ -10,10 +10,6 @@ async function loadCSV() {
         const data = await response.text();
         const parsedData = parseCSV(data);
 
-        // データ構造の確認
-        console.log("Parsed Data:", parsedData);
-        console.log("First Row Example:", parsedData[0]);
-
         quizData = parsedData; // データをグローバル変数に保存
         initializeQuestions(); // データがロードされてから初期化
     } catch (error) {
@@ -49,8 +45,8 @@ function filterQuestionsByEra() {
 }
 
 // 問題をランダムに表示
-function loadQuestion(selectedEras = []) {
-    const data = filterQuestionsByEra(selectedEras);
+function loadQuestion() {
+    const data = filterQuestionsByEra();
     currentQuestion = data[Math.floor(Math.random() * data.length)];
 
     document.getElementById("person-name").innerText = currentQuestion.person;
@@ -65,11 +61,10 @@ function setOptions(type, options, correctAnswer) {
     const optionsDiv = document.getElementById(`${type}-options`);
     optionsDiv.innerHTML = "";
 
-    // 正解を含むようにした上で、選択肢を6つに制限
-    const uniqueOptions = Array.from(new Set(options)); // 重複を排除
-    const filteredOptions = uniqueOptions.filter(option => option !== correctAnswer); // 正解以外の選択肢
-    const randomOptions = filteredOptions.sort(() => Math.random() - 0.5).slice(0, 5); // ランダムに5つ選ぶ
-    const finalOptions = [...randomOptions, correctAnswer].sort(() => Math.random() - 0.5); // 正解を追加しシャッフル
+    const uniqueOptions = Array.from(new Set(options));
+    const filteredOptions = uniqueOptions.filter(option => option !== correctAnswer);
+    const randomOptions = filteredOptions.sort(() => Math.random() - 0.5).slice(0, 5);
+    const finalOptions = [...randomOptions, correctAnswer].sort(() => Math.random() - 0.5);
 
     finalOptions.forEach((option) => {
         const button = document.createElement("button");
@@ -84,7 +79,6 @@ function setOptions(type, options, correctAnswer) {
 function selectOption(type, value) {
     userAnswer[type] = value;
 
-    // 現在選択しているボタンの背景色のみ変更
     document.querySelectorAll(`#${type}-options .option`).forEach(btn => {
         btn.style.backgroundColor = btn.innerText === value ? "#add8e6" : "";
     });
@@ -105,7 +99,7 @@ function submitAnswer() {
     checkAnswer(isCorrect);
 }
 
-// 選択の正誤判定が行われた後に、#resultにクラスを追加
+// 正誤判定後に結果を表示
 function checkAnswer(isCorrect) {
     const resultElement = document.getElementById("result");
     resultElement.classList.remove("correct", "incorrect", "show");
@@ -122,8 +116,8 @@ function checkAnswer(isCorrect) {
 
 // 初期化処理
 function initializeQuestions() {
-    getSelectedEras();  // チェックボックスの状態を取得
-    loadQuestion();     // 最初の問題をロード
+    getSelectedEras(); // チェックボックスの状態を取得
+    loadQuestion(); // 最初の問題をロード
 }
 
 // フィルターを適用
@@ -132,17 +126,15 @@ function applyFilters() {
     loadQuestion();
 }
 
-// 次の問題へ進むときには、リザルトを隠す
+// 次の問題へ進むときのリセット
 function resetResult() {
     const resultElement = document.getElementById("result");
     resultElement.classList.remove("show", "correct", "incorrect");
     resultElement.textContent = ""; // 表示テキストをリセット
-    resultElement.style.opacity = 0; // 非表示にリセット
+    resultElement.style.opacity = 0;
 
     loadQuestion(); // 次の問題をロード
 }
-
-
 
 // リセットボタン
 document.getElementById("reset").onclick = () => {
@@ -159,10 +151,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("check-answer").onclick = submitAnswer;
     document.getElementById("reset").onclick = () => {
         resetResult();
-        loadQuestion(); // 次の問題をロード
+        loadQuestion();
         window.scrollTo({
-          top:0,
-          behavior:"smooth"
+            top: 0,
+            behavior: "smooth"
         });
     };
 });
